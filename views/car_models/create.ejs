@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Car Model</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            margin: 0;
+            background: #0b1220;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        h1 {
+            margin: 12px 0 16px;
+            font-size: 28px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 16px;
+            background: #0f172a;
+            border: 1px solid #243046;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #243046;
+            background: #0b1220;
+            color: #e2e8f0;
+        }
+
+        textarea {
+            min-height: 90px;
+        }
+
+        .full {
+            grid-column: span 2;
+        }
+
+        .actions {
+            grid-column: span 2;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        a.link {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
+        <div class="container">
+            <h1>Create Car Model</h1>
+            <form id="model-form">
+                <div>
+                    <label>Series Name</label>
+                    <input name="series_name" required />
+                </div>
+                <div>
+                    <label>Model Code</label>
+                    <input name="model_code" required />
+                </div>
+                <div>
+                    <label>Body Style</label>
+                    <input name="body_style" />
+                </div>
+                <div>
+                    <label>Market</label>
+                    <input name="market" />
+                </div>
+                <div>
+                    <label>Start Year</label>
+                    <input name="start_year" type="number" />
+                </div>
+                <div>
+                    <label>End Year</label>
+                    <input name="end_year" type="number" />
+                </div>
+                <div class="full">
+                    <label>Notes</label>
+                    <textarea name="notes"></textarea>
+                </div>
+                <div class="actions">
+                    <a class="link" href="/car-models">Cancel</a>
+                    <button type="submit">Create</button>
+                </div>
+            </form>
+        </div>
+        <script>
+            const form = document.getElementById('model-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const fd = new FormData(form);
+                const body = Object.fromEntries(fd.entries());
+                ["start_year", "end_year"].forEach(k => { if (body[k] === "") delete body[k]; });
+                const res = await fetch('/api/car-models', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                if (res.ok) window.location.href = '/car-models';
+                else alert('Failed to create car model');
+            });
+        </script>
+</body>
+
+</html>

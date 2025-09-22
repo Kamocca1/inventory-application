@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
     listPartCategories,
     getPartCategory,
+    getPartCategoryForm,
     createPartCategory,
     updatePartCategory,
     deletePartCategory,
@@ -10,6 +11,7 @@ import {
 const router = Router();
 
 router.get("/", listPartCategories);
+router.get("/create", getPartCategoryForm);
 router.get("/:id", getPartCategory);
 router.post("/", createPartCategory);
 router.put("/:id", updatePartCategory);

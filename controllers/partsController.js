@@ -26,32 +26,127 @@ export async function getPart(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.render("part/index", { part: rows[0] });
+        res.render("part/index", {
+            part: rows[0],
+            models: [],
+            trims: [],
+            category: null,
+        });
+    } catch (err) {
+        res.status(500).json({ error: "Failed to load part" });
+    }
+}
+
+export function getPartForm(req, res) {
+    res.render("parts/create");
+}
+
+export async function getPartEditForm(req, res) {
+    const { id } = req.params;
+    try {
+        const { rows } = await pool.query(
+            `SELECT id, category_id, sku, bmw_oem_number, name, description, brand, supplier,
+                    price_cents, currency, stock_quantity, min_stock_level, location,
+                    weight_kg, dimensions_mm, metadata, created_at, updated_at
+             FROM parts WHERE id = $1`,
+            [id]
+        );
+        if (rows.length === 0)
+            return res.status(404).json({ error: "Not found" });
+        res.render("parts/edit", { part: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to load part" });
     }
 }
 
 export async function createPart(req, res) {
-    const {
-        category_id = null,
-        sku,
-        bmw_oem_number = null,
-        name,
-        description = null,
-        brand = null,
-        supplier = null,
-        price_cents = null,
-        currency = "USD",
-        stock_quantity = 0,
-        min_stock_level = 0,
-        location = null,
-        weight_kg = null,
-        dimensions_mm = null,
-        metadata = null,
-    } = req.body ?? {};
-
     try {
+        const {
+            category_id,
+            sku,
+            bmw_oem_number,
+            name,
+            description,
+            brand,
+            supplier,
+            price_cents,
+            currency = "USD",
+            stock_quantity,
+            min_stock_level,
+            location,
+            weight_kg,
+            dimensions_mm,
+            metadata,
+        } = req.body;
+
+        // Sanitize and convert data - properly handle empty strings for UUID fields
+        const sanitizedData = {
+            category_id:
+                category_id &&
+                category_id.trim() !== "" &&
+                category_id.trim() !== "null"
+                    ? category_id.trim()
+                    : null,
+            sku: sku?.trim(),
+            bmw_oem_number:
+                bmw_oem_number && bmw_oem_number.trim() !== ""
+                    ? bmw_oem_number.trim()
+                    : null,
+            name: name?.trim(),
+            description:
+                description && description.trim() !== ""
+                    ? description.trim()
+                    : null,
+            brand: brand && brand.trim() !== "" ? brand.trim() : null,
+            supplier:
+                supplier && supplier.trim() !== "" ? supplier.trim() : null,
+            price_cents:
+                price_cents && price_cents !== ""
+                    ? parseInt(price_cents)
+                    : null,
+            currency: currency || "USD",
+            stock_quantity:
+                stock_quantity && stock_quantity !== ""
+                    ? parseInt(stock_quantity)
+                    : 0,
+            min_stock_level:
+                min_stock_level && min_stock_level !== ""
+                    ? parseInt(min_stock_level)
+                    : 0,
+            location:
+                location && location.trim() !== "" ? location.trim() : null,
+            weight_kg:
+                weight_kg && weight_kg !== "" ? parseFloat(weight_kg) : null,
+            dimensions_mm: null,
+            metadata: null,
+        };
+
+        // Parse JSON fields safely
+        if (dimensions_mm && dimensions_mm.trim() !== "") {
+            try {
+                sanitizedData.dimensions_mm = JSON.parse(dimensions_mm);
+            } catch (e) {
+                return res
+                    .status(400)
+                    .json({ error: "Invalid JSON format in dimensions" });
+            }
+        }
+
+        if (metadata && metadata.trim() !== "") {
+            try {
+                sanitizedData.metadata = JSON.parse(metadata);
+            } catch (e) {
+                return res
+                    .status(400)
+                    .json({ error: "Invalid JSON format in metadata" });
+            }
+        }
+
+        // Validate required fields
+        if (!sanitizedData.sku || !sanitizedData.name) {
+            return res.status(400).json({ error: "SKU and Name are required" });
+        }
+
         const { rows } = await pool.query(
             `INSERT INTO parts (
                 category_id, sku, bmw_oem_number, name, description, brand, supplier,
@@ -62,26 +157,29 @@ export async function createPart(req, res) {
                        price_cents, currency, stock_quantity, min_stock_level, location,
                        weight_kg, dimensions_mm, metadata, created_at, updated_at`,
             [
-                category_id,
-                sku,
-                bmw_oem_number,
-                name,
-                description,
-                brand,
-                supplier,
-                price_cents,
-                currency,
-                stock_quantity,
-                min_stock_level,
-                location,
-                weight_kg,
-                dimensions_mm,
-                metadata,
+                sanitizedData.category_id,
+                sanitizedData.sku,
+                sanitizedData.bmw_oem_number,
+                sanitizedData.name,
+                sanitizedData.description,
+                sanitizedData.brand,
+                sanitizedData.supplier,
+                sanitizedData.price_cents,
+                sanitizedData.currency,
+                sanitizedData.stock_quantity,
+                sanitizedData.min_stock_level,
+                sanitizedData.location,
+                sanitizedData.weight_kg,
+                sanitizedData.dimensions_mm,
+                sanitizedData.metadata,
             ]
         );
-        res.status(201).render("part/index", { part: rows[0] });
+        res.redirect(`/parts/${rows[0].id}`);
     } catch (err) {
-        res.status(500).json({ error: "Failed to create part" });
+        console.error("Create part error:", err);
+        res.status(500).json({
+            error: `Failed to create part: ${err.message}`,
+        });
     }
 }
 
@@ -135,7 +233,7 @@ export async function updatePart(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.render("part/index", { part: rows[0] });
+        res.redirect(`/parts/${id}`);
     } catch (err) {
         res.status(500).json({ error: "Failed to update part" });
     }
@@ -148,7 +246,7 @@ export async function deletePart(req, res) {
             id,
         ]);
         if (rowCount === 0) return res.status(404).json({ error: "Not found" });
-        res.status(204).send().render("parts/index", { parts: rows });
+        res.redirect("/parts");
     } catch (err) {
         res.status(500).json({ error: "Failed to delete part" });
     }

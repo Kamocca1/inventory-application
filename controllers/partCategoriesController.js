@@ -26,6 +26,10 @@ export async function getPartCategory(req, res) {
     }
 }
 
+export function getPartCategoryForm(req, res) {
+    res.render("part_categories/create");
+}
+
 export async function createPartCategory(req, res) {
     const { name, description = null, parent_id = null } = req.body ?? {};
     try {

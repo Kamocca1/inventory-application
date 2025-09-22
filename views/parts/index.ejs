@@ -69,6 +69,9 @@
     <%- include("../partials/nav") %>
         <div class="container">
             <h1>Parts</h1>
+            <div style="margin: 8px 0 16px;">
+                <a href="/parts/create" class="badge" style="background:#2563eb;">+ New Part</a>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -83,9 +86,11 @@
                 <tbody>
                     <% if (Array.isArray(parts) && parts.length) { %>
                         <% parts.forEach(function(part){ %>
-                            <tr>
+                            <tr onclick="window.location='/parts/' + '<%= part.id %>'" style="cursor:pointer;">
                                 <td>
-                                    <%= part.name %>
+                                    <a href="/parts/<%= part.id %>" class="link">
+                                        <%= part.name %>
+                                    </a>
                                 </td>
                                 <td class="muted">
                                     <%= part.sku %>
