@@ -10,49 +10,57 @@
         <%- include("../partials/nav") %>
 
         <div class="container">
-            <h1>Part Categories</h1>
-            <div style="margin: 8px 0 16px">
-                <a href="/part-categories/create" class="badge badge-primary"
-                    >+ New Category</a
-                >
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Parent ID</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% if (Array.isArray(categories) && categories.length) { %>
-                    <% categories.forEach(function(category){ %>
-                    <tr
-                        onclick="window.location='/part-categories/' + '<%= category.id %>'"
-                        style="cursor: pointer"
+            <div class="card-header">
+                <h1 class="card-title">Part Categories</h1>
+                <div class="card-actions">
+                    <a href="/part-categories/create" class="btn btn-primary"
+                        >+ New Category</a
                     >
-                        <td>
-                            <a
-                                href="/part-categories/<%= category.id %>"
-                                class="link"
-                            >
-                                <%= category.name %>
-                            </a>
-                        </td>
-                        <td class="muted">
-                            <%= category.description || '-' %>
-                        </td>
-                        <td class="muted"><%= category.parent_id || '-' %></td>
-                        <td class="muted"><%= category.created_at %></td>
-                    </tr>
-                    <% }) %> <% } else { %>
-                    <tr>
-                        <td colspan="4" class="muted">No categories found</td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Parent ID</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (Array.isArray(categories) && categories.length) {
+                        %> <% categories.forEach(function(category){ %>
+                        <tr
+                            onclick="window.location='/part-categories/' + '<%= category.id %>'"
+                            style="cursor: pointer"
+                        >
+                            <td>
+                                <a
+                                    href="/part-categories/<%= category.id %>"
+                                    class="link"
+                                >
+                                    <%= category.name %>
+                                </a>
+                            </td>
+                            <td class="muted">
+                                <%= category.description || '-' %>
+                            </td>
+                            <td class="muted">
+                                <%= category.parent_id || '-' %>
+                            </td>
+                            <td class="muted"><%= category.created_at %></td>
+                        </tr>
+                        <% }) %> <% } else { %>
+                        <tr>
+                            <td colspan="4" class="muted">
+                                No categories found
+                            </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </body>
 </html>
