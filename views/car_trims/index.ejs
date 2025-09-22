@@ -21,8 +21,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Model</th>
                             <th>Trim</th>
+                            <th>Model</th>
                             <th>Engine</th>
                             <th>Power</th>
                             <th>Years</th>
@@ -35,9 +35,6 @@
                             onclick="window.location='/car-trims/' + '<%= trim.id %>'"
                             style="cursor: pointer"
                         >
-                            <td class="muted">
-                                <%= trim.model_code || trim.car_model_id %>
-                            </td>
                             <td>
                                 <a
                                     href="/car-trims/<%= trim.id %>"
@@ -45,6 +42,9 @@
                                 >
                                     <%= trim.trim_name %>
                                 </a>
+                            </td>
+                            <td class="muted">
+                                <%= trim.model_code || trim.car_model_id %>
                             </td>
                             <td class="mono">
                                 <%= (trim.engine_code || '-' ) + ' • ' +
