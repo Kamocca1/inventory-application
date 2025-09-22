@@ -5,9 +5,9 @@ export async function listPartCategories(req, res) {
         const { rows } = await pool.query(
             "SELECT id, name, description, parent_id, created_at, updated_at FROM part_categories ORDER BY name ASC"
         );
-        res.json(rows);
+        res.render("part_categories/index", { categories: rows });
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch part categories" });
+        res.status(500).json({ error: "Failed to load part categories" });
     }
 }
 
@@ -20,9 +20,9 @@ export async function getPartCategory(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.json(rows[0]);
+        res.render("part_categories/index", { categories: rows[0] });
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch part category" });
+        res.status(500).json({ error: "Failed to load part category" });
     }
 }
 
@@ -35,7 +35,9 @@ export async function createPartCategory(req, res) {
              RETURNING id, name, description, parent_id, created_at, updated_at`,
             [name, description, parent_id]
         );
-        res.status(201).json(rows[0]);
+        res.status(201).render("part_categories/index", {
+            categories: rows[0],
+        });
     } catch (err) {
         res.status(500).json({ error: "Failed to create part category" });
     }
@@ -56,7 +58,7 @@ export async function updatePartCategory(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.json(rows[0]);
+        res.render("part_categories/index", { categories: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to update part category" });
     }
@@ -70,7 +72,9 @@ export async function deletePartCategory(req, res) {
             [id]
         );
         if (rowCount === 0) return res.status(404).json({ error: "Not found" });
-        res.status(204).send();
+        res.status(204)
+            .send()
+            .render("part_categories/index", { categories: rows });
     } catch (err) {
         res.status(500).json({ error: "Failed to delete part category" });
     }

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Models</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            margin: 0;
+            background: #0b1220;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        h1 {
+            margin: 12px 0 16px;
+            font-size: 28px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #243046;
+            font-size: 14px;
+        }
+
+        th {
+            color: #cbd5e1;
+            font-weight: 600;
+            background: #111827;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background: #0f172a;
+        }
+
+        .muted {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
+        <div class="container">
+            <h1>Car Models</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Series</th>
+                        <th>Model Code</th>
+                        <th>Body</th>
+                        <th>Market</th>
+                        <th>Years</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (Array.isArray(models) && models.length) { %>
+                        <% models.forEach(function(model){ %>
+                            <tr>
+                                <td>
+                                    <%= model.series_name %>
+                                </td>
+                                <td class="muted">
+                                    <%= model.model_code %>
+                                </td>
+                                <td class="muted">
+                                    <%= model.body_style || '-' %>
+                                </td>
+                                <td class="muted">
+                                    <%= model.market || '-' %>
+                                </td>
+                                <td class="muted">
+                                    <%= model.start_year || '-' %> - <%= model.end_year || 'present' %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="5" class="muted">No car models found</td>
+                                    </tr>
+                                    <% } %>
+                </tbody>
+            </table>
+        </div>
+</body>
+
+</html>

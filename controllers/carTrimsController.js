@@ -8,7 +8,7 @@ export async function listCarTrims(req, res) {
                     created_at, updated_at
              FROM car_trims ORDER BY trim_name ASC`
         );
-        res.json(rows);
+        res.render("car_trims/index", { trims: rows });
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch car trims" });
     }
@@ -26,9 +26,9 @@ export async function getCarTrim(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.json(rows[0]);
+        res.render("car_trims/index", { trims: rows[0] });
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch car trim" });
+        res.status(500).json({ error: "Failed to load car trim" });
     }
 }
 
@@ -73,7 +73,7 @@ export async function createCarTrim(req, res) {
                 notes,
             ]
         );
-        res.status(201).json(rows[0]);
+        res.status(201).render("car_trims/index", { trims: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to create car trim" });
     }
@@ -124,7 +124,7 @@ export async function updateCarTrim(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.json(rows[0]);
+        res.render("car_trims/index", { trims: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to update car trim" });
     }
@@ -138,7 +138,7 @@ export async function deleteCarTrim(req, res) {
             [id]
         );
         if (rowCount === 0) return res.status(404).json({ error: "Not found" });
-        res.status(204).send();
+        res.status(204).send().render("car_trims/index", { trims: rows });
     } catch (err) {
         res.status(500).json({ error: "Failed to delete car trim" });
     }

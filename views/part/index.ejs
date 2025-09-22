@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= (part && part.name) ? part.name : 'Part' %>
+    </title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            margin: 0;
+            background: #0b1220;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        h1 {
+            margin: 12px 0 8px;
+            font-size: 28px;
+        }
+
+        h2 {
+            margin: 24px 0 8px;
+            font-size: 20px;
+            color: #cbd5e1;
+        }
+
+        .muted {
+            color: #94a3b8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+
+        .card {
+            background: #0f172a;
+            border: 1px solid #243046;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .kv {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 8px 16px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: #1f2937;
+            color: #e5e7eb;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #243046;
+            font-size: 14px;
+        }
+
+        th {
+            color: #cbd5e1;
+            font-weight: 600;
+            background: #111827;
+            position: sticky;
+            top: 0;
+        }
+
+        .mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        a.link {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+
+        a.link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
+        <div class="container">
+            <div class="grid">
+                <div class="card" style="grid-column: span 12;">
+                    <div class="row" style="justify-content: space-between; align-items: baseline;">
+                        <h1>
+                            <%= part?.name || 'Part' %>
+                        </h1>
+                        <% if (part?.sku) { %>
+                            <span class="badge">SKU: <%= part.sku %></span>
+                            <% } %>
+                    </div>
+                    <div class="kv">
+                        <div class="muted">OEM</div>
+                        <div class="mono">
+                            <%= part?.bmw_oem_number || '-' %>
+                        </div>
+
+                        <div class="muted">Brand</div>
+                        <div>
+                            <%= part?.brand || '-' %>
+                        </div>
+
+                        <div class="muted">Supplier</div>
+                        <div>
+                            <%= part?.supplier || '-' %>
+                        </div>
+
+                        <div class="muted">Category</div>
+                        <div>
+                            <% if (category) { %>
+                                <%= category.name %>
+                                    <% } else { %>
+                                        -
+                                        <% } %>
+                        </div>
+
+                        <div class="muted">Price</div>
+                        <div>
+                            <% if (part?.price_cents !=null) { %>
+                                <span class="badge">
+                                    <%= (part.price_cents/100).toFixed(2) %>
+                                        <%= part.currency || 'USD' %>
+                                </span>
+                                <% } else { %>
+                                    -
+                                    <% } %>
+                        </div>
+
+                        <div class="muted">Stock</div>
+                        <div>
+                            <%= part?.stock_quantity ?? '-' %> (min <%= part?.min_stock_level ?? 0 %>)
+                        </div>
+
+                        <div class="muted">Location</div>
+                        <div>
+                            <%= part?.location || '-' %>
+                        </div>
+
+                        <div class="muted">Weight</div>
+                        <div>
+                            <%= (part?.weight_kg !=null) ? part.weight_kg + ' kg' : '-' %>
+                        </div>
+
+                        <div class="muted">Dimensions</div>
+                        <div class="mono">
+                            <% if (part?.dimensions_mm) { %>
+                                <%= JSON.stringify(part.dimensions_mm) %>
+                                    <% } else { %>
+                                        -
+                                        <% } %>
+                        </div>
+
+                        <div class="muted">Description</div>
+                        <div class="muted">
+                            <%= part?.description || '-' %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="grid-column: span 12;">
+                    <h2>Compatible Models</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Series</th>
+                                <th>Model Code</th>
+                                <th>Body</th>
+                                <th>Market</th>
+                                <th>Years</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (Array.isArray(models) && models.length) { %>
+                                <% models.forEach(function(model){ %>
+                                    <tr>
+                                        <td>
+                                            <%= model.series_name || '-' %>
+                                        </td>
+                                        <td class="mono">
+                                            <%= model.model_code || '-' %>
+                                        </td>
+                                        <td class="muted">
+                                            <%= model.body_style || '-' %>
+                                        </td>
+                                        <td class="muted">
+                                            <%= model.market || '-' %>
+                                        </td>
+                                        <td class="muted">
+                                            <%= model.start_year || '-' %> - <%= model.end_year || 'present' %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="5" class="muted">No model associations</td>
+                                            </tr>
+                                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card" style="grid-column: span 12;">
+                    <h2>Compatible Trims</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Trim</th>
+                                <th>Engine</th>
+                                <th>Power</th>
+                                <th>Years</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (Array.isArray(trims) && trims.length) { %>
+                                <% trims.forEach(function(trim){ %>
+                                    <tr>
+                                        <td class="mono">
+                                            <%= trim.model_code || trim.car_model_id || '-' %>
+                                        </td>
+                                        <td>
+                                            <%= trim.trim_name || '-' %>
+                                        </td>
+                                        <td class="mono">
+                                            <%= (trim.engine_code || '-' ) + ' • ' + (trim.fuel_type || '-' ) + ' • ' +
+                                                (trim.transmission || '-' ) %>
+                                        </td>
+                                        <td class="muted">
+                                            <%= (trim.horsepower_ps || '-' ) + ' PS / ' + (trim.torque_nm || '-' )
+                                                + ' Nm' %>
+                                        </td>
+                                        <td class="muted">
+                                            <%= trim.start_year || '-' %> - <%= trim.end_year || 'present' %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="5" class="muted">No trim associations</td>
+                                            </tr>
+                                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <a class="link" href="/parts">← Back to parts</a>
+            </div>
+        </div>
+</body>
+
+</html>

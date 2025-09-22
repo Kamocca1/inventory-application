@@ -19,13 +19,18 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/part-categories", partCategoriesRoutes);
-app.use("/api/parts", partsRoutes);
-app.use("/api/car-models", carModelsRoutes);
-app.use("/api/car-trims", carTrimsRoutes);
+app.use(["/", "/parts"], partsRoutes);
+app.use("/part-categories", partCategoriesRoutes);
+app.use("/car-models", carModelsRoutes);
+app.use("/car-trims", carTrimsRoutes);
 
-app.get("/", (req, res) => {
-    res.json({ message: "Inventory API" });
+const PORT = 3000;
+app.listen(PORT, (error) => {
+    if (error) {
+        throw error;
+    }
+
+    console.log(`Inventory app - listening on port ${PORT}!`);
 });
 
-export default app;
+// export default app;

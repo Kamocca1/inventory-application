@@ -8,9 +8,9 @@ export async function listParts(req, res) {
                     weight_kg, dimensions_mm, metadata, created_at, updated_at
              FROM parts ORDER BY name ASC`
         );
-        res.json(rows);
+        res.render("parts/index", { parts: rows });
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch parts" });
+        res.status(500).json({ error: "Failed to load parts" });
     }
 }
 
@@ -26,9 +26,9 @@ export async function getPart(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.json(rows[0]);
+        res.render("part/index", { part: rows[0] });
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch part" });
+        res.status(500).json({ error: "Failed to load part" });
     }
 }
 
@@ -79,7 +79,7 @@ export async function createPart(req, res) {
                 metadata,
             ]
         );
-        res.status(201).json(rows[0]);
+        res.status(201).render("part/index", { part: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to create part" });
     }
@@ -135,7 +135,7 @@ export async function updatePart(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.json(rows[0]);
+        res.render("part/index", { part: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to update part" });
     }
@@ -148,7 +148,7 @@ export async function deletePart(req, res) {
             id,
         ]);
         if (rowCount === 0) return res.status(404).json({ error: "Not found" });
-        res.status(204).send();
+        res.status(204).send().render("parts/index", { parts: rows });
     } catch (err) {
         res.status(500).json({ error: "Failed to delete part" });
     }

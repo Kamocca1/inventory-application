@@ -6,9 +6,9 @@ export async function listCarModels(req, res) {
             `SELECT id, series_name, model_code, body_style, market, start_year, end_year, notes, created_at, updated_at
              FROM car_models ORDER BY model_code ASC`
         );
-        res.json(rows);
+        res.render("car_models/index", { models: rows });
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch car models" });
+        res.status(500).json({ error: "Failed to load car models" });
     }
 }
 
@@ -22,9 +22,9 @@ export async function getCarModel(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.json(rows[0]);
+        res.render("car_models/index", { models: rows[0] });
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch car model" });
+        res.status(500).json({ error: "Failed to load car model" });
     }
 }
 
@@ -53,7 +53,7 @@ export async function createCarModel(req, res) {
                 notes,
             ]
         );
-        res.status(201).json(rows[0]);
+        res.status(201).render("car_models/index", { models: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to create car model" });
     }
@@ -90,7 +90,7 @@ export async function updateCarModel(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.json(rows[0]);
+        res.render("car_models/index", { models: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to update car model" });
     }
@@ -104,7 +104,7 @@ export async function deleteCarModel(req, res) {
             [id]
         );
         if (rowCount === 0) return res.status(404).json({ error: "Not found" });
-        res.status(204).send();
+        res.status(204).send().render("car_models/index", { models: rows });
     } catch (err) {
         res.status(500).json({ error: "Failed to delete car model" });
     }
