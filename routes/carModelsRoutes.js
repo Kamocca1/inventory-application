@@ -17,6 +17,6 @@ router.get("/:id/edit", getCarModelEditForm);
 router.get("/:id", getCarModel);
 router.post("/", createCarModel);
 router.put("/:id", updateCarModel);
-router.delete("/:id", deleteCarModel);
+router.post("/:id/delete", deleteCarModel);
 
 export default router;

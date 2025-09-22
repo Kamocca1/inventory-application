@@ -17,6 +17,6 @@ router.get("/:id/edit", getCarTrimEditForm);
 router.get("/:id", getCarTrim);
 router.post("/", createCarTrim);
 router.put("/:id", updateCarTrim);
-router.delete("/:id", deleteCarTrim);
+router.post("/:id/delete", deleteCarTrim);
 
 export default router;

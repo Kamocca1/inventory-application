@@ -17,6 +17,6 @@ router.get("/:id/edit", getPartEditForm);
 router.get("/:id", getPart);
 router.post("/", createPart);
 router.put("/:id", updatePart);
-router.delete("/:id", deletePart);
+router.post("/:id/delete", deletePart);
 
 export default router;

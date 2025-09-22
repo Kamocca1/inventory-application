@@ -17,6 +17,6 @@ router.get("/:id/edit", getPartCategoryEditForm);
 router.get("/:id", getPartCategory);
 router.post("/", createPartCategory);
 router.put("/:id", updatePartCategory);
-router.delete("/:id", deletePartCategory);
+router.post("/:id/delete", deletePartCategory);
 
 export default router;

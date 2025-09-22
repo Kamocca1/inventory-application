@@ -162,6 +162,11 @@ button:hover {
     color: white;
 }
 
+.badge-danger {
+    background: #dc2626;
+    color: white;
+}
+
 .badge:hover {
     opacity: 0.8;
 }

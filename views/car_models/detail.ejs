@@ -24,6 +24,20 @@
                             class="badge badge-primary"
                             >Edit</a
                         >
+                        <form
+                            method="POST"
+                            action="/car-models/<%= model.id %>/delete"
+                            style="display: inline"
+                            onsubmit="return confirm('Are you sure you want to delete this car model? This action cannot be undone.')"
+                        >
+                            <button
+                                type="submit"
+                                class="badge badge-danger"
+                                style="border: none; cursor: pointer"
+                            >
+                                Delete
+                            </button>
+                        </form>
                     </div>
                 </div>
 
