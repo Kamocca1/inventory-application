@@ -19,6 +19,12 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware to make current path available to all templates
+app.use((req, res, next) => {
+    res.locals.currentPath = req.path;
+    next();
+});
+
 app.get("/", (req, res) => {
     res.render("index");
 });

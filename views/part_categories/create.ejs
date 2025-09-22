@@ -11,24 +11,35 @@
 
         <div class="container-narrow">
             <h1>Create Category</h1>
-            <form id="category-form" action="/part-categories" method="post">
-                <div class="full">
-                    <label>Name</label>
-                    <input name="name" required />
-                </div>
-                <div class="full">
-                    <label>Description</label>
-                    <textarea name="description"></textarea>
-                </div>
-                <div class="full">
-                    <label>Parent Category ID</label>
-                    <input name="parent_id" />
-                </div>
-                <div class="actions">
-                    <a class="link" href="/part-categories">Cancel</a>
-                    <button type="submit">Create</button>
-                </div>
-            </form>
+            <div class="form-container">
+                <form
+                    id="category-form"
+                    action="/part-categories"
+                    method="post"
+                    class="form-grid"
+                >
+                    <div class="form-group full-width">
+                        <label>Name</label>
+                        <input name="name" required />
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Description</label>
+                        <textarea name="description"></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Parent Category ID</label>
+                        <input name="parent_id" />
+                    </div>
+                    <div class="form-group full-width">
+                        <div class="nav-actions">
+                            <a class="link" href="/part-categories">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                Create
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <script>

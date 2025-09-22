@@ -9,10 +9,34 @@
             BMW Inventory
         </a>
         <ul class="nav-links">
-            <li><a href="/parts" class="nav-link">Parts</a></li>
-            <li><a href="/part-categories" class="nav-link">Categories</a></li>
-            <li><a href="/car-models" class="nav-link">Models</a></li>
-            <li><a href="/car-trims" class="nav-link">Trims</a></li>
+            <li>
+                <a
+                    href="/parts"
+                    class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/parts')) ? 'active' : '' %>"
+                    >Parts</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/part-categories"
+                    class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/part-categories')) ? 'active' : '' %>"
+                    >Categories</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/car-models"
+                    class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/car-models')) ? 'active' : '' %>"
+                    >Models</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/car-trims"
+                    class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/car-trims')) ? 'active' : '' %>"
+                    >Trims</a
+                >
+            </li>
         </ul>
     </div>
 </nav>
