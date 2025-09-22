@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= category.name || 'Part Category Details' %></title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <%- include("../partials/nav") %>
+
+        <div class="container">
+            <div class="detail-section">
+                <div class="detail-header">
+                    <h1 class="detail-title">
+                        <%= category.name || 'Part Category Details' %>
+                    </h1>
+                    <div class="detail-actions">
+                        <a
+                            href="/part-categories/<%= category.id %>/edit"
+                            class="badge badge-primary"
+                            >Edit</a
+                        >
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value">
+                        <%= category.name || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Description:</div>
+                    <div class="detail-value">
+                        <%= category.description || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Parent ID:</div>
+                    <div class="detail-value mono">
+                        <%= category.parent_id || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Created:</div>
+                    <div class="detail-value muted">
+                        <%= category.created_at || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Updated:</div>
+                    <div class="detail-value muted">
+                        <%= category.updated_at || 'N/A' %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <a href="/part-categories" class="link">← Back to Categories</a>
+            </div>
+        </div>
+    </body>
+</html>

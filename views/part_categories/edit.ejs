@@ -1,98 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edit Category</title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <%- include("../partials/nav") %>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Category</title>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-            margin: 0;
-            background: #0b1220;
-            color: #e2e8f0;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 24px auto;
-            padding: 0 16px;
-        }
-
-        h1 {
-            margin: 12px 0 16px;
-            font-size: 28px;
-        }
-
-        form {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px 16px;
-            background: #0f172a;
-            border: 1px solid #243046;
-            border-radius: 8px;
-            padding: 16px;
-        }
-
-        label {
-            display: block;
-            font-size: 13px;
-            color: #cbd5e1;
-            margin-bottom: 6px;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #243046;
-            background: #0b1220;
-            color: #e2e8f0;
-        }
-
-        textarea {
-            min-height: 90px;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        button {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        a.link {
-            color: #93c5fd;
-            text-decoration: none;
-        }
-    </style>
-</head>
-
-<body>
-    <%- include("../partials/nav") %>
-        <div class="container">
+        <div class="container-narrow">
             <h1>Edit Category</h1>
             <form id="category-form">
-                <div>
+                <div class="full">
                     <label>Name</label>
-                    <input name="name" required value="<%= category?.name || '' %>" />
+                    <input
+                        name="name"
+                        required
+                        value="<%= category?.name || '' %>"
+                    />
                 </div>
-                <div>
+                <div class="full">
                     <label>Description</label>
-                    <textarea name="description"><%= category?.description || '' %></textarea>
+                    <textarea name="description">
+<%= category?.description || '' %></textarea
+                    >
                 </div>
-                <div>
+                <div class="full">
                     <label>Parent Category ID</label>
-                    <input name="parent_id" value="<%= category?.parent_id || '' %>" />
+                    <input
+                        name="parent_id"
+                        value="<%= category?.parent_id || '' %>"
+                    />
                 </div>
                 <div class="actions">
                     <a class="link" href="/part-categories">Cancel</a>
@@ -100,20 +39,23 @@
                 </div>
             </form>
         </div>
+
         <script>
-            const form = document.getElementById('category-form');
-            form.addEventListener('submit', async (e) => {
+            const form = document.getElementById("category-form");
+            form.addEventListener("submit", async (e) => {
                 e.preventDefault();
                 const fd = new FormData(form);
                 const body = Object.fromEntries(fd.entries());
-                const res = await fetch('/api/part-categories/<%= category.id %>', {
-                    method: 'PUT', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
+                const res = await fetch("/part-categories/<%= category.id %>", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
                 });
-                if (res.ok) window.location.href = '/part-categories';
-                else alert('Failed to update category');
+                if (res.ok)
+                    window.location.href =
+                        "/part-categories/<%= category.id %>";
+                else alert("Failed to update category");
             });
         </script>
-</body>
-
+    </body>
 </html>

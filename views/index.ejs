@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Inventory Management System</title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <%- include("partials/nav") %>
+
+        <div class="container">
+            <div class="hero-section">
+                <h1>Inventory Management System</h1>
+                <p class="hero-subtitle">
+                    Manage your BMW parts, categories, models, and trims
+                </p>
+            </div>
+
+            <div class="module-grid">
+                <div class="module-card">
+                    <h3>Parts</h3>
+                    <p class="muted">
+                        Manage inventory parts with SKUs, pricing, and stock
+                        levels
+                    </p>
+                    <div class="module-actions">
+                        <a href="/parts" class="link">View All Parts</a>
+                        <a href="/parts/create" class="badge badge-primary"
+                            >+ New Part</a
+                        >
+                    </div>
+                </div>
+
+                <div class="module-card">
+                    <h3>Part Categories</h3>
+                    <p class="muted">
+                        Organize parts into hierarchical categories
+                    </p>
+                    <div class="module-actions">
+                        <a href="/part-categories" class="link"
+                            >View All Categories</a
+                        >
+                        <a
+                            href="/part-categories/create"
+                            class="badge badge-primary"
+                            >+ New Category</a
+                        >
+                    </div>
+                </div>
+
+                <div class="module-card">
+                    <h3>Car Models</h3>
+                    <p class="muted">
+                        Manage BMW car models and series information
+                    </p>
+                    <div class="module-actions">
+                        <a href="/car-models" class="link">View All Models</a>
+                        <a href="/car-models/create" class="badge badge-primary"
+                            >+ New Model</a
+                        >
+                    </div>
+                </div>
+
+                <div class="module-card">
+                    <h3>Car Trims</h3>
+                    <p class="muted">
+                        Detailed trim specifications and engine configurations
+                    </p>
+                    <div class="module-actions">
+                        <a href="/car-trims" class="link">View All Trims</a>
+                        <a href="/car-trims/create" class="badge badge-primary"
+                            >+ New Trim</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= model.series_name || 'Car Model Details' %></title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <%- include("../partials/nav") %>
+
+        <div class="container">
+            <div class="detail-section">
+                <div class="detail-header">
+                    <h1 class="detail-title">
+                        <%= model.series_name || 'Car Model Details' %>
+                    </h1>
+                    <div class="detail-actions">
+                        <% if (model.model_code) { %>
+                        <span class="badge"><%= model.model_code %></span>
+                        <% } %>
+                        <a
+                            href="/car-models/<%= model.id %>/edit"
+                            class="badge badge-primary"
+                            >Edit</a
+                        >
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <div class="detail-label">Series Name:</div>
+                    <div class="detail-value">
+                        <%= model.series_name || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Model Code:</div>
+                    <div class="detail-value mono">
+                        <%= model.model_code || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Body Style:</div>
+                    <div class="detail-value">
+                        <%= model.body_style || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Market:</div>
+                    <div class="detail-value"><%= model.market || 'N/A' %></div>
+
+                    <div class="detail-label">Start Year:</div>
+                    <div class="detail-value">
+                        <%= model.start_year || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">End Year:</div>
+                    <div class="detail-value">
+                        <%= model.end_year || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Notes:</div>
+                    <div class="detail-value"><%= model.notes || 'N/A' %></div>
+
+                    <div class="detail-label">Created:</div>
+                    <div class="detail-value muted">
+                        <%= model.created_at || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Updated:</div>
+                    <div class="detail-value muted">
+                        <%= model.updated_at || 'N/A' %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <a href="/car-models" class="link">← Back to Car Models</a>
+            </div>
+        </div>
+    </body>
+</html>

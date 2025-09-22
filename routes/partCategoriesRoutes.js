@@ -3,6 +3,7 @@ import {
     listPartCategories,
     getPartCategory,
     getPartCategoryForm,
+    getPartCategoryEditForm,
     createPartCategory,
     updatePartCategory,
     deletePartCategory,
@@ -12,6 +13,7 @@ const router = Router();
 
 router.get("/", listPartCategories);
 router.get("/create", getPartCategoryForm);
+router.get("/:id/edit", getPartCategoryEditForm);
 router.get("/:id", getPartCategory);
 router.post("/", createPartCategory);
 router.put("/:id", updatePartCategory);

@@ -1,99 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Part Categories</title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <%- include("../partials/nav") %>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Part Categories</title>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-            margin: 0;
-            background: #0b1220;
-            color: #e2e8f0;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 24px auto;
-            padding: 0 16px;
-        }
-
-        h1 {
-            margin: 12px 0 16px;
-            font-size: 28px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-        }
-
-        th,
-        td {
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid #243046;
-            font-size: 14px;
-        }
-
-        th {
-            color: #cbd5e1;
-            font-weight: 600;
-            background: #111827;
-            position: sticky;
-            top: 0;
-        }
-
-        tr:hover {
-            background: #0f172a;
-        }
-
-        .muted {
-            color: #94a3b8;
-        }
-    </style>
-</head>
-
-<body>
-    <%- include("../partials/nav") %>
         <div class="container">
             <h1>Part Categories</h1>
-            <div style="margin: 8px 0 16px;">
-                <a href="/part-categories/create" class="badge" style="background:#2563eb;">+ New Category</a>
+            <div style="margin: 8px 0 16px">
+                <a href="/part-categories/create" class="badge badge-primary"
+                    >+ New Category</a
+                >
             </div>
             <table>
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Parent</th>
+                        <th>Parent ID</th>
+                        <th>Created</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% if (Array.isArray(categories) && categories.length) { %>
-                        <% categories.forEach(function(cat){ %>
-                            <tr>
-                                <td>
-                                    <%= cat.name %>
-                                </td>
-                                <td class="muted">
-                                    <%= cat.description || '-' %>
-                                </td>
-                                <td class="muted">
-                                    <%= cat.parent_name || (cat.parent_id ? cat.parent_id : '-' ) %>
-                                </td>
-                            </tr>
-                            <% }) %>
-                                <% } else { %>
-                                    <tr>
-                                        <td colspan="3" class="muted">No categories found</td>
-                                    </tr>
-                                    <% } %>
+                    <% categories.forEach(function(category){ %>
+                    <tr
+                        onclick="window.location='/part-categories/' + '<%= category.id %>'"
+                        style="cursor: pointer"
+                    >
+                        <td>
+                            <a
+                                href="/part-categories/<%= category.id %>"
+                                class="link"
+                            >
+                                <%= category.name %>
+                            </a>
+                        </td>
+                        <td class="muted">
+                            <%= category.description || '-' %>
+                        </td>
+                        <td class="muted"><%= category.parent_id || '-' %></td>
+                        <td class="muted"><%= category.created_at %></td>
+                    </tr>
+                    <% }) %> <% } else { %>
+                    <tr>
+                        <td colspan="4" class="muted">No categories found</td>
+                    </tr>
+                    <% } %>
                 </tbody>
             </table>
         </div>
-</body>
-
+    </body>
 </html>

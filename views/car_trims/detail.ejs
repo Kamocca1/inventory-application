@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= trim.trim_name || 'Car Trim Details' %></title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <%- include("../partials/nav") %>
+
+        <div class="container">
+            <div class="detail-section">
+                <div class="detail-header">
+                    <h1 class="detail-title">
+                        <%= trim.trim_name || 'Car Trim Details' %>
+                    </h1>
+                    <div class="detail-actions">
+                        <% if (trim.engine_code) { %>
+                        <span class="badge"><%= trim.engine_code %></span>
+                        <% } %>
+                        <a
+                            href="/car-trims/<%= trim.id %>/edit"
+                            class="badge badge-primary"
+                            >Edit</a
+                        >
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <div class="detail-label">Trim Name:</div>
+                    <div class="detail-value">
+                        <%= trim.trim_name || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Car Model ID:</div>
+                    <div class="detail-value mono">
+                        <%= trim.car_model_id || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Engine Code:</div>
+                    <div class="detail-value mono">
+                        <%= trim.engine_code || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Fuel Type:</div>
+                    <div class="detail-value">
+                        <%= trim.fuel_type || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Transmission:</div>
+                    <div class="detail-value">
+                        <%= trim.transmission || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Drive Type:</div>
+                    <div class="detail-value">
+                        <%= trim.drive_type || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Displacement:</div>
+                    <div class="detail-value">
+                        <% if (trim.displacement_cc) { %> <%=
+                        trim.displacement_cc %> cc <% } else { %> N/A <% } %>
+                    </div>
+
+                    <div class="detail-label">Horsepower:</div>
+                    <div class="detail-value">
+                        <% if (trim.horsepower_ps) { %> <%= trim.horsepower_ps
+                        %> PS <% } else { %> N/A <% } %>
+                    </div>
+
+                    <div class="detail-label">Torque:</div>
+                    <div class="detail-value">
+                        <% if (trim.torque_nm) { %> <%= trim.torque_nm %> Nm <%
+                        } else { %> N/A <% } %>
+                    </div>
+
+                    <div class="detail-label">Start Year:</div>
+                    <div class="detail-value">
+                        <%= trim.start_year || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">End Year:</div>
+                    <div class="detail-value">
+                        <%= trim.end_year || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Market:</div>
+                    <div class="detail-value"><%= trim.market || 'N/A' %></div>
+
+                    <div class="detail-label">Notes:</div>
+                    <div class="detail-value"><%= trim.notes || 'N/A' %></div>
+
+                    <div class="detail-label">Created:</div>
+                    <div class="detail-value muted">
+                        <%= trim.created_at || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Updated:</div>
+                    <div class="detail-value muted">
+                        <%= trim.updated_at || 'N/A' %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <a href="/car-trims" class="link">← Back to Car Trims</a>
+            </div>
+        </div>
+    </body>
+</html>

@@ -26,12 +26,7 @@ export async function getPart(req, res) {
         );
         if (rows.length === 0)
             return res.status(404).json({ error: "Not found" });
-        res.render("part/index", {
-            part: rows[0],
-            models: [],
-            trims: [],
-            category: null,
-        });
+        res.render("parts/detail", { part: rows[0] });
     } catch (err) {
         res.status(500).json({ error: "Failed to load part" });
     }

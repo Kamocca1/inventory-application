@@ -19,7 +19,11 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(["/", "/parts"], partsRoutes);
+app.get("/", (req, res) => {
+    res.render("index");
+});
+
+app.use("/parts", partsRoutes);
 app.use("/part-categories", partCategoriesRoutes);
 app.use("/car-models", carModelsRoutes);
 app.use("/car-trims", carTrimsRoutes);

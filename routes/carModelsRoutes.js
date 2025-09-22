@@ -2,6 +2,8 @@ import { Router } from "express";
 import {
     listCarModels,
     getCarModel,
+    getCarModelForm,
+    getCarModelEditForm,
     createCarModel,
     updateCarModel,
     deleteCarModel,
@@ -10,6 +12,8 @@ import {
 const router = Router();
 
 router.get("/", listCarModels);
+router.get("/create", getCarModelForm);
+router.get("/:id/edit", getCarModelEditForm);
 router.get("/:id", getCarModel);
 router.post("/", createCarModel);
 router.put("/:id", updateCarModel);
