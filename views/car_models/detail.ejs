@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= model.series_name || 'Car Model Details' %></title>
-        <link rel="stylesheet" href="/styles.css" />
-    </head>
-    <body>
-        <%- include("../partials/nav") %>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= model.series_name || 'Car Model Details' %>
+    </title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
 
         <div class="container">
             <div class="detail-section">
@@ -17,27 +21,21 @@
                     </h1>
                     <div class="detail-actions">
                         <% if (model.model_code) { %>
-                        <span class="badge"><%= model.model_code %></span>
-                        <% } %>
-                        <a
-                            href="/car-models/<%= model.id %>/edit"
-                            class="badge badge-primary"
-                            >Edit</a
-                        >
-                        <form
-                            method="POST"
-                            action="/car-models/<%= model.id %>/delete"
-                            style="display: inline"
-                            onsubmit="return confirm('Are you sure you want to delete this car model? This action cannot be undone.')"
-                        >
-                            <button
-                                type="submit"
-                                class="badge badge-danger"
-                                style="border: none; cursor: pointer"
-                            >
-                                Delete
-                            </button>
-                        </form>
+                            <span class="badge">
+                                <%= model.model_code %>
+                            </span>
+                            <% } %>
+                                <% if (user && user.admin) { %>
+                                    <a href="/car-models/<%= model.id %>/edit" class="badge badge-primary">Edit</a>
+                                    <form method="POST" action="/car-models/<%= model.id %>/delete"
+                                        style="display: inline"
+                                        onsubmit="return confirm('Are you sure you want to delete this car model? This action cannot be undone.')">
+                                        <button type="submit" class="badge badge-danger"
+                                            style="border: none; cursor: pointer">
+                                            Delete
+                                        </button>
+                                    </form>
+                                    <% } %>
                     </div>
                 </div>
 
@@ -58,7 +56,9 @@
                     </div>
 
                     <div class="detail-label">Market:</div>
-                    <div class="detail-value"><%= model.market || 'N/A' %></div>
+                    <div class="detail-value">
+                        <%= model.market || 'N/A' %>
+                    </div>
 
                     <div class="detail-label">Start Year:</div>
                     <div class="detail-value">
@@ -71,7 +71,9 @@
                     </div>
 
                     <div class="detail-label">Notes:</div>
-                    <div class="detail-value"><%= model.notes || 'N/A' %></div>
+                    <div class="detail-value">
+                        <%= model.notes || 'N/A' %>
+                    </div>
 
                     <div class="detail-label">Created:</div>
                     <div class="detail-value muted">
@@ -89,5 +91,6 @@
                 <a href="/car-models" class="link">← Back to Car Models</a>
             </div>
         </div>
-    </body>
+</body>
+
 </html>

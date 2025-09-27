@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Car Trims</title>
-        <link rel="stylesheet" href="/styles.css" />
-    </head>
-    <body>
-        <%- include("../partials/nav") %>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Trims</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
         <div class="container">
             <div class="card-header">
                 <h1 class="card-title">Car Trims</h1>
                 <div class="card-actions">
-                    <a href="/car-trims/create" class="btn btn-primary"
-                        >+ New Trim</a
-                    >
+                    <% if (user && user.admin) { %>
+                        <a href="/car-trims/create" class="btn btn-primary">+ New Trim</a>
+                        <% } %>
                 </div>
             </div>
             <div class="table-container">
@@ -29,47 +31,41 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (Array.isArray(trims) && trims.length) { %> <%
-                        trims.forEach(function(trim){ %>
-                        <tr
-                            onclick="window.location='/car-trims/' + '<%= trim.id %>'"
-                            style="cursor: pointer"
-                        >
-                            <td>
-                                <a
-                                    href="/car-trims/<%= trim.id %>"
-                                    class="link"
-                                >
-                                    <%= trim.trim_name %>
-                                </a>
-                            </td>
-                            <td class="muted">
-                                <%= trim.model_code || trim.car_model_id %>
-                            </td>
-                            <td class="mono">
-                                <%= (trim.engine_code || '-' ) + ' • ' +
-                                (trim.fuel_type || '-' ) + ' • ' +
-                                (trim.transmission || '-' ) %>
-                            </td>
-                            <td class="muted">
-                                <%= (trim.horsepower_ps || '-' ) + ' PS / ' +
-                                (trim.torque_nm || '-' ) + ' Nm' %>
-                            </td>
-                            <td class="muted">
-                                <%= trim.start_year || '-' %> - <%=
-                                trim.end_year || 'present' %>
-                            </td>
-                        </tr>
-                        <% }) %> <% } else { %>
-                        <tr>
-                            <td colspan="5" class="muted">
-                                No car trims found
-                            </td>
-                        </tr>
-                        <% } %>
+                        <% if (Array.isArray(trims) && trims.length) { %>
+                            <% trims.forEach(function(trim){ %>
+                                <tr onclick="window.location='/car-trims/' + '<%= trim.id %>'" style="cursor: pointer">
+                                    <td>
+                                        <a href="/car-trims/<%= trim.id %>" class="link">
+                                            <%= trim.trim_name %>
+                                        </a>
+                                    </td>
+                                    <td class="muted">
+                                        <%= trim.model_code || trim.car_model_id %>
+                                    </td>
+                                    <td class="mono">
+                                        <%= (trim.engine_code || '-' ) + ' • ' + (trim.fuel_type || '-' ) + ' • ' +
+                                            (trim.transmission || '-' ) %>
+                                    </td>
+                                    <td class="muted">
+                                        <%= (trim.horsepower_ps || '-' ) + ' PS / ' + (trim.torque_nm || '-' ) + ' Nm'
+                                            %>
+                                    </td>
+                                    <td class="muted">
+                                        <%= trim.start_year || '-' %> - <%= trim.end_year || 'present' %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="5" class="muted">
+                                                No car trims found
+                                            </td>
+                                        </tr>
+                                        <% } %>
                     </tbody>
                 </table>
             </div>
         </div>
-    </body>
+</body>
+
 </html>

@@ -28,6 +28,36 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Table for user authentication
+CREATE TABLE IF NOT EXISTS users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  username TEXT NOT NULL UNIQUE,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  hash TEXT NOT NULL,
+  salt TEXT NOT NULL,
+  admin BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+DROP TRIGGER IF EXISTS trg_users_set_updated_at ON users;
+CREATE TRIGGER trg_users_set_updated_at
+BEFORE UPDATE ON users
+FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+-- -- Table for express-session (connect-pg-simple) session store
+-- CREATE TABLE IF NOT EXISTS user_sessions (
+--   sid VARCHAR NOT NULL PRIMARY KEY,
+--   sess JSON NOT NULL,
+--   expire TIMESTAMPTZ NOT NULL
+-- );
+
+-- CREATE INDEX IF NOT EXISTS idx_user_sessions_expire ON user_sessions(expire);
+
+
 -- part_categories: hierarchical categories for parts (e.g., Engine, Brakes, Filters)
 CREATE TABLE IF NOT EXISTS part_categories (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

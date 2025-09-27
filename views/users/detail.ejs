@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= user.username || 'User Details' %></title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <%- include("../partials/nav") %>
+
+        <div class="container">
+            <%- include("../partials/success.ejs") %>
+            <div class="detail-section">
+                <div class="detail-header">
+                    <h1 class="detail-title">
+                        <%= user.first_name %> <%= user.last_name %>
+                    </h1>
+                    <div class="detail-actions">
+                        <% if (user.admin) { %>
+                        <span class="badge badge-primary">Admin</span>
+                        <% } else { %>
+                        <span class="badge">User</span>
+                        <% } %>
+                        <a
+                            href="/users/<%= user.id %>/update"
+                            class="badge badge-primary"
+                            >Edit</a
+                        >
+                        <form
+                            method="POST"
+                            action="/users/<%= user.id %>/delete"
+                            style="display: inline"
+                            onsubmit="return confirm('Are you sure you want to delete this user? This action cannot be undone.')"
+                        >
+                            <button
+                                type="submit"
+                                class="badge badge-danger"
+                                style="border: none; cursor: pointer"
+                            >
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <div class="detail-label">First Name:</div>
+                    <div class="detail-value">
+                        <%= user.first_name || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Last Name:</div>
+                    <div class="detail-value">
+                        <%= user.last_name || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value"><%= user.email || 'N/A' %></div>
+
+                    <div class="detail-label">Username:</div>
+                    <div class="detail-value">
+                        <%= user.username || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">User ID:</div>
+                    <div class="detail-value mono"><%= user.id || 'N/A' %></div>
+
+                    <div class="detail-label">Admin Status:</div>
+                    <div class="detail-value">
+                        <% if (user.admin) { %>
+                        <span class="badge badge-primary">Administrator</span>
+                        <% } else { %>
+                        <span class="badge">Regular User</span>
+                        <% } %>
+                    </div>
+
+                    <div class="detail-label">Created:</div>
+                    <div class="detail-value muted">
+                        <%= user.created_at || 'N/A' %>
+                    </div>
+
+                    <div class="detail-label">Updated:</div>
+                    <div class="detail-value muted">
+                        <%= user.updated_at || 'N/A' %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <a href="/users" class="link">← Back to Users</a>
+            </div>
+        </div>
+    </body>
+</html>

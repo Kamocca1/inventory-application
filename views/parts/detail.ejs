@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= part.name || 'Part Details' %></title>
-        <link rel="stylesheet" href="/styles.css" />
-    </head>
-    <body>
-        <%- include("../partials/nav") %>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= part.name || 'Part Details' %>
+    </title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
 
         <div class="container">
             <div class="detail-section">
@@ -17,33 +21,28 @@
                     </h1>
                     <div class="detail-actions">
                         <% if (part.sku) { %>
-                        <span class="badge"><%= part.sku %></span>
-                        <% } %>
-                        <a
-                            href="/parts/<%= part.id %>/edit"
-                            class="badge badge-primary"
-                            >Edit</a
-                        >
-                        <form
-                            method="POST"
-                            action="/parts/<%= part.id %>/delete"
-                            style="display: inline"
-                            onsubmit="return confirm('Are you sure you want to delete this part? This action cannot be undone.')"
-                        >
-                            <button
-                                type="submit"
-                                class="badge badge-danger"
-                                style="border: none; cursor: pointer"
-                            >
-                                Delete
-                            </button>
-                        </form>
+                            <span class="badge">
+                                <%= part.sku %>
+                            </span>
+                            <% } %>
+                                <% if (user && user.admin) { %>
+                                    <a href="/parts/<%= part.id %>/edit" class="badge badge-primary">Edit</a>
+                                    <form method="POST" action="/parts/<%= part.id %>/delete" style="display: inline"
+                                        onsubmit="return confirm('Are you sure you want to delete this part? This action cannot be undone.')">
+                                        <button type="submit" class="badge badge-danger"
+                                            style="border: none; cursor: pointer">
+                                            Delete
+                                        </button>
+                                    </form>
+                                    <% } %>
                     </div>
                 </div>
 
                 <div class="detail-grid">
                     <div class="detail-label">Name:</div>
-                    <div class="detail-value"><%= part.name || 'N/A' %></div>
+                    <div class="detail-value">
+                        <%= part.name || 'N/A' %>
+                    </div>
 
                     <div class="detail-label">SKU:</div>
                     <div class="detail-value mono">
@@ -61,7 +60,9 @@
                     </div>
 
                     <div class="detail-label">Brand:</div>
-                    <div class="detail-value"><%= part.brand || 'N/A' %></div>
+                    <div class="detail-value">
+                        <%= part.brand || 'N/A' %>
+                    </div>
 
                     <div class="detail-label">Supplier:</div>
                     <div class="detail-value">
@@ -70,9 +71,10 @@
 
                     <div class="detail-label">Price:</div>
                     <div class="detail-value">
-                        <% if (part.price_cents) { %> <%= (part.price_cents /
-                        100).toFixed(2) %> <%= part.currency || 'USD' %> <% }
-                        else { %> N/A <% } %>
+                        <% if (part.price_cents) { %>
+                            <%= (part.price_cents / 100).toFixed(2) %>
+                                <%= part.currency || 'USD' %>
+                                    <% } else { %> N/A <% } %>
                     </div>
 
                     <div class="detail-label">Stock Quantity:</div>
@@ -92,8 +94,8 @@
 
                     <div class="detail-label">Weight:</div>
                     <div class="detail-value">
-                        <% if (part.weight_kg) { %> <%= part.weight_kg %> kg <%
-                        } else { %> N/A <% } %>
+                        <% if (part.weight_kg) { %>
+                            <%= part.weight_kg %> kg <% } else { %> N/A <% } %>
                     </div>
 
                     <div class="detail-label">Category ID:</div>
@@ -117,5 +119,6 @@
                 <a href="/parts" class="link">← Back to Parts</a>
             </div>
         </div>
-    </body>
+</body>
+
 </html>

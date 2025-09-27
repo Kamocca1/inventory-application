@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Parts</title>
-        <link rel="stylesheet" href="/styles.css" />
-    </head>
-    <body>
-        <%- include("../partials/nav") %>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parts</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
         <div class="container">
             <div class="card-header">
                 <h1 class="card-title">Parts</h1>
                 <div class="card-actions">
-                    <a href="/parts/create" class="btn btn-primary"
-                        >+ New Part</a
-                    >
+                    <% if (user && user.admin) { %>
+                        <a href="/parts/create" class="btn btn-primary">+ New Part</a>
+                        <% } %>
                 </div>
             </div>
             <div class="table-container">
@@ -30,40 +32,45 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (Array.isArray(parts) && parts.length) { %> <%
-                        parts.forEach(function(part){ %>
-                        <tr
-                            onclick="window.location='/parts/' + '<%= part.id %>'"
-                            style="cursor: pointer"
-                        >
-                            <td>
-                                <a href="/parts/<%= part.id %>" class="link">
-                                    <%= part.name %>
-                                </a>
-                            </td>
-                            <td class="muted"><%= part.sku %></td>
-                            <td class="muted">
-                                <%= part.bmw_oem_number || '-' %>
-                            </td>
-                            <td><%= part.brand || '-' %></td>
-                            <td>
-                                <% if (part.price_cents !=null) { %>
-                                <span class="badge">
-                                    <%= (part.price_cents/100).toFixed(2) %> <%=
-                                    part.currency || 'USD' %>
-                                </span>
-                                <% } else { %> - <% } %>
-                            </td>
-                            <td><%= part.stock_quantity %></td>
-                        </tr>
-                        <% }) %> <% } else { %>
-                        <tr>
-                            <td colspan="6" class="muted">No parts found</td>
-                        </tr>
-                        <% } %>
+                        <% if (Array.isArray(parts) && parts.length) { %>
+                            <% parts.forEach(function(part){ %>
+                                <tr onclick="window.location='/parts/' + '<%= part.id %>'" style="cursor: pointer">
+                                    <td>
+                                        <a href="/parts/<%= part.id %>" class="link">
+                                            <%= part.name %>
+                                        </a>
+                                    </td>
+                                    <td class="muted">
+                                        <%= part.sku %>
+                                    </td>
+                                    <td class="muted">
+                                        <%= part.bmw_oem_number || '-' %>
+                                    </td>
+                                    <td>
+                                        <%= part.brand || '-' %>
+                                    </td>
+                                    <td>
+                                        <% if (part.price_cents !=null) { %>
+                                            <span class="badge">
+                                                <%= (part.price_cents/100).toFixed(2) %>
+                                                    <%= part.currency || 'USD' %>
+                                            </span>
+                                            <% } else { %> - <% } %>
+                                    </td>
+                                    <td>
+                                        <%= part.stock_quantity %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="6" class="muted">No parts found</td>
+                                        </tr>
+                                        <% } %>
                     </tbody>
                 </table>
             </div>
         </div>
-    </body>
+</body>
+
 </html>

@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Inventory Management System</title>
-        <link rel="stylesheet" href="/styles.css" />
-    </head>
-    <body>
-        <%- include("partials/nav") %>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory Management System</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <%- include("partials/nav") %>
 
         <div class="container">
             <div class="hero-section">
-                <h1>Inventory Management System</h1>
-                <p class="hero-subtitle">
-                    Manage your BMW parts, categories, models, and trims
-                </p>
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Streamline your BMW inventory with precision</h1>
+                        <p class="hero-subtitle">
+                            Manage parts, categories, models, and trims with our
+                            specialty inventory management system.
+                        </p>
+                        <div class="hero-buttons">
+                            <% if (!(typeof user !=='undefined' && user)) { %>
+                                <a href="/users/login" class="btn btn-primary hero-btn-primary">Login</a>
+                                <a href="/users/register" class="btn btn-secondary hero-btn-secondary">Register</a>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-credit">
+                    Photo by
+                    <a href="https://unsplash.com/@partrickl" target="_blank" rel="noopener">P.L.</a>
+                    on
+                    <a href="https://unsplash.com/photos/a-bmw-logo-is-lit-up-in-the-dark-Z95a_WN3cLY" target="_blank"
+                        rel="noopener">Unsplash</a>
+                </div>
             </div>
 
             <div class="module-grid">
@@ -26,9 +46,7 @@
                     </p>
                     <div class="module-actions">
                         <a href="/parts" class="link">View All Parts</a>
-                        <a href="/parts/create" class="badge badge-primary"
-                            >+ New Part</a
-                        >
+                        <a href="/parts/create" class="badge badge-primary">+ New Part</a>
                     </div>
                 </div>
 
@@ -38,14 +56,8 @@
                         Organize parts into hierarchical categories
                     </p>
                     <div class="module-actions">
-                        <a href="/part-categories" class="link"
-                            >View All Categories</a
-                        >
-                        <a
-                            href="/part-categories/create"
-                            class="badge badge-primary"
-                            >+ New Category</a
-                        >
+                        <a href="/part-categories" class="link">View All Categories</a>
+                        <a href="/part-categories/create" class="badge badge-primary">+ New Category</a>
                     </div>
                 </div>
 
@@ -56,9 +68,7 @@
                     </p>
                     <div class="module-actions">
                         <a href="/car-models" class="link">View All Models</a>
-                        <a href="/car-models/create" class="badge badge-primary"
-                            >+ New Model</a
-                        >
+                        <a href="/car-models/create" class="badge badge-primary">+ New Model</a>
                     </div>
                 </div>
 
@@ -69,12 +79,11 @@
                     </p>
                     <div class="module-actions">
                         <a href="/car-trims" class="link">View All Trims</a>
-                        <a href="/car-trims/create" class="badge badge-primary"
-                            >+ New Trim</a
-                        >
+                        <a href="/car-trims/create" class="badge badge-primary">+ New Trim</a>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+</body>
+
 </html>

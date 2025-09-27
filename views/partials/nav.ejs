@@ -1,42 +1,59 @@
 <nav>
-    <div class="nav-container">
-        <a href="/" class="nav-brand">
-            <img
-                src="https://www.bmw.com/etc.clientlibs/settings/wcm/designs/bmwcom/base/resources/ci2020/img/logo-bmw-com-gray.svg"
-                alt="BMW Logo"
-                class="nav-logo"
-            />
-            BMW Inventory
-        </a>
-        <ul class="nav-links">
-            <li>
-                <a
-                    href="/parts"
-                    class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/parts')) ? 'active' : '' %>"
-                    >Parts</a
-                >
-            </li>
-            <li>
-                <a
-                    href="/part-categories"
-                    class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/part-categories')) ? 'active' : '' %>"
-                    >Categories</a
-                >
-            </li>
-            <li>
-                <a
-                    href="/car-models"
-                    class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/car-models')) ? 'active' : '' %>"
-                    >Models</a
-                >
-            </li>
-            <li>
-                <a
-                    href="/car-trims"
-                    class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/car-trims')) ? 'active' : '' %>"
-                    >Trims</a
-                >
-            </li>
-        </ul>
+    <div class="nav-container nav-3col">
+        <div class="nav-left">
+            <a href="/" class="nav-brand">
+                <img src="https://www.bmw.com/etc.clientlibs/settings/wcm/designs/bmwcom/base/resources/ci2020/img/logo-bmw-com-gray.svg"
+                    alt="BMW Logo" class="nav-logo" />
+                BMW Inventory
+            </a>
+        </div>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li>
+                    <a href="/parts"
+                        class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/parts')) ? 'active' : '' %>">Parts</a>
+                </li>
+                <li>
+                    <a href="/part-categories"
+                        class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/part-categories')) ? 'active' : '' %>">Categories</a>
+                </li>
+                <li>
+                    <a href="/car-models"
+                        class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/car-models')) ? 'active' : '' %>">Models</a>
+                </li>
+                <li>
+                    <a href="/car-trims"
+                        class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/car-trims')) ? 'active' : '' %>">Trims</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-links nav-links-auth">
+                <% if (typeof user !=='undefined' && user) { %>
+                    <li>
+                        <a href="/users"
+                            class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/users')) ? 'active' : '' %>">Users</a>
+                    </li>
+                    <li>
+                        <span class="nav-user">Hello, <%= user.username %></span>
+                    </li>
+                    <li>
+                        <form method="POST" action="/users/logout" style="display: inline">
+                            <button type="submit" class="nav-link"
+                                style="background: none; border: none; cursor: pointer">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                    <% } else { %>
+                        <li>
+                            <a href="/users/login" class="btn btn-primary hero-btn-primary">Login</a>
+                        </li>
+                        <li>
+                            <a href="/users/register" class="btn btn-secondary hero-btn-secondary">Register</a>
+                        </li>
+                        <% } %>
+            </ul>
+        </div>
     </div>
 </nav>

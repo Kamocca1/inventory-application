@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Part Categories</title>
-        <link rel="stylesheet" href="/styles.css" />
-    </head>
-    <body>
-        <%- include("../partials/nav") %>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Part Categories</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
 
         <div class="container">
             <div class="card-header">
                 <h1 class="card-title">Part Categories</h1>
                 <div class="card-actions">
-                    <a href="/part-categories/create" class="btn btn-primary"
-                        >+ New Category</a
-                    >
+                    <% if (user && user.admin) { %>
+                        <a href="/part-categories/create" class="btn btn-primary">+ New Category</a>
+                        <% } %>
                 </div>
             </div>
             <div class="table-container">
@@ -29,38 +31,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (Array.isArray(categories) && categories.length) {
-                        %> <% categories.forEach(function(category){ %>
-                        <tr
-                            onclick="window.location='/part-categories/' + '<%= category.id %>'"
-                            style="cursor: pointer"
-                        >
-                            <td>
-                                <a
-                                    href="/part-categories/<%= category.id %>"
-                                    class="link"
-                                >
-                                    <%= category.name %>
-                                </a>
-                            </td>
-                            <td class="muted">
-                                <%= category.description || '-' %>
-                            </td>
-                            <td class="muted">
-                                <%= category.parent_id || '-' %>
-                            </td>
-                            <td class="muted"><%= category.created_at %></td>
-                        </tr>
-                        <% }) %> <% } else { %>
-                        <tr>
-                            <td colspan="4" class="muted">
-                                No categories found
-                            </td>
-                        </tr>
-                        <% } %>
+                        <% if (Array.isArray(categories) && categories.length) { %>
+                            <% categories.forEach(function(category){ %>
+                                <tr onclick="window.location='/part-categories/' + '<%= category.id %>'"
+                                    style="cursor: pointer">
+                                    <td>
+                                        <a href="/part-categories/<%= category.id %>" class="link">
+                                            <%= category.name %>
+                                        </a>
+                                    </td>
+                                    <td class="muted">
+                                        <%= category.description || '-' %>
+                                    </td>
+                                    <td class="muted">
+                                        <%= category.parent_id || '-' %>
+                                    </td>
+                                    <td class="muted">
+                                        <%= category.created_at %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="4" class="muted">
+                                                No categories found
+                                            </td>
+                                        </tr>
+                                        <% } %>
                     </tbody>
                 </table>
             </div>
         </div>
-    </body>
+</body>
+
 </html>

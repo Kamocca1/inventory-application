@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Create User</title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <%- include("../partials/nav") %>
+
+        <div class="container">
+            <h1>Create Account</h1>
+            <p>Join the BMW Inventory system</p>
+            <%- include("../partials/errors.ejs") %>
+            <div class="form-container">
+                <form
+                    id="user-form"
+                    action="/users/register"
+                    method="post"
+                    class="form-grid"
+                >
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input
+                            id="firstName"
+                            name="firstName"
+                            type="text"
+                            required
+                            autocomplete="given-name"
+                            placeholder="Enter your first name"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input
+                            id="lastName"
+                            name="lastName"
+                            type="text"
+                            required
+                            autocomplete="family-name"
+                            placeholder="Enter your last name"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            required
+                            autocomplete="email"
+                            placeholder="Enter your email address"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input
+                            id="username"
+                            name="username"
+                            type="text"
+                            required
+                            autocomplete="username"
+                            placeholder="Choose a username"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            required
+                            autocomplete="new-password"
+                            placeholder="Create a secure password"
+                            minlength="8"
+                        />
+                        <div class="form-feedback">
+                            Password must be at least 8 characters long
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            required
+                            autocomplete="new-password"
+                            placeholder="Confirm your password"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input name="admin" type="checkbox" />
+                            Admin User
+                        </label>
+                    </div>
+                    <div class="form-group full-width">
+                        <div class="nav-actions">
+                            <a class="btn btn-secondary" href="/users/login"
+                                >Back to Login</a
+                            >
+                            <button type="submit" class="btn btn-primary">
+                                Create Account
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

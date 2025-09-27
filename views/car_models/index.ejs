@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Car Models</title>
-        <link rel="stylesheet" href="/styles.css" />
-    </head>
-    <body>
-        <%- include("../partials/nav") %>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Models</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <%- include("../partials/nav") %>
         <div class="container">
             <div class="card-header">
                 <h1 class="card-title">Car Models</h1>
                 <div class="card-actions">
-                    <a href="/car-models/create" class="btn btn-primary"
-                        >+ New Model</a
-                    >
+                    <% if (user && user.admin) { %>
+                        <a href="/car-models/create" class="btn btn-primary">+ New Model</a>
+                        <% } %>
                 </div>
             </div>
             <div class="table-container">
@@ -29,40 +31,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (Array.isArray(models) && models.length) { %> <%
-                        models.forEach(function(model){ %>
-                        <tr
-                            onclick="window.location='/car-models/' + '<%= model.id %>'"
-                            style="cursor: pointer"
-                        >
-                            <td>
-                                <a
-                                    href="/car-models/<%= model.id %>"
-                                    class="link"
-                                >
-                                    <%= model.series_name %>
-                                </a>
-                            </td>
-                            <td class="muted"><%= model.model_code %></td>
-                            <td class="muted">
-                                <%= model.body_style || '-' %>
-                            </td>
-                            <td class="muted"><%= model.market || '-' %></td>
-                            <td class="muted">
-                                <%= model.start_year || '-' %> - <%=
-                                model.end_year || 'present' %>
-                            </td>
-                        </tr>
-                        <% }) %> <% } else { %>
-                        <tr>
-                            <td colspan="5" class="muted">
-                                No car models found
-                            </td>
-                        </tr>
-                        <% } %>
+                        <% if (Array.isArray(models) && models.length) { %>
+                            <% models.forEach(function(model){ %>
+                                <tr onclick="window.location='/car-models/' + '<%= model.id %>'"
+                                    style="cursor: pointer">
+                                    <td>
+                                        <a href="/car-models/<%= model.id %>" class="link">
+                                            <%= model.series_name %>
+                                        </a>
+                                    </td>
+                                    <td class="muted">
+                                        <%= model.model_code %>
+                                    </td>
+                                    <td class="muted">
+                                        <%= model.body_style || '-' %>
+                                    </td>
+                                    <td class="muted">
+                                        <%= model.market || '-' %>
+                                    </td>
+                                    <td class="muted">
+                                        <%= model.start_year || '-' %> - <%= model.end_year || 'present' %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="5" class="muted">
+                                                No car models found
+                                            </td>
+                                        </tr>
+                                        <% } %>
                     </tbody>
                 </table>
             </div>
         </div>
-    </body>
+</body>
+
 </html>
