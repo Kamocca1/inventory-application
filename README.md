@@ -1,6 +1,6 @@
 # Part Pilot
 
-#### Video Demo: <URL HERE>
+#### Video Demo: [video link](https://www.loom.com/share/e98bbc08892345a8aff5bcf3fb136a97?sid=6c30c138-f572-4228-a400-f958bb3c992a)
 
 ## Description
 
